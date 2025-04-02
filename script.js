@@ -53,8 +53,43 @@ class PomodoroTimer {
         this.updateDisplay();
 
         if (this.timeLeft === 0) {
+            this.createFireworks();
             this.switchMode();
         }
+    }
+
+    createFireworks() {
+        // Create multiple fireworks
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                this.createSingleFirework();
+            }, i * 50);
+        }
+    }
+
+    createSingleFirework() {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        
+        // Random angle and distance for each particle
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 200 + Math.random() * 300; // Increased distance
+        
+        // Calculate target position
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        // Set custom properties for animation
+        firework.style.setProperty('--tx', `${tx}px`);
+        firework.style.setProperty('--ty', `${ty}px`);
+        
+        // Add to document
+        document.body.appendChild(firework);
+        
+        // Remove after animation
+        setTimeout(() => {
+            firework.remove();
+        }, 1500); // Match the CSS animation duration
     }
 
     switchMode() {
